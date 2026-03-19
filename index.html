@@ -12,23 +12,17 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- React & ReactDOM CDN -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
-    <!-- Babel for JSX -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Framer Motion CDN -->
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <!-- Alpine.js CDN (Lighter and more reliable for single files) -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+        [x-cloak] { display: none !important; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: black;
+            background-color: #000;
             color: #d1d5db;
             margin: 0;
             overflow-x: hidden;
@@ -63,743 +57,323 @@
         }
     </script>
 </head>
-<body>
-    <div id="root"></div>
-
-    <script type="text/babel">
-        const { useState, useMemo, useEffect, useRef } = React;
-        const { motion, AnimatePresence } = FramerMotion;
-
-        // --- DATA ---
-        const SEO_TEXT = `
-  Welcome to the ultimate destination for the most powerful **RIVALS script** and **Blue Lock Rivals script** for Roblox. If you're looking to dominate the competition, our collection of **rivals scripts** offers everything from high-precision **roblox rivals aimbot** to advanced ESP features. Whether you're playing the fast-paced FPS mode or the intense soccer matches in Blue Lock, having a reliable **roblox rivals script** is essential for staying ahead of the game.
-
-  Our platform provides the latest **rivals aimbot script no gui** options, ensuring a lightweight and undetected experience. Many players often wonder **how to use blue lock rivals script** or **how to get blue lock rivals script** safely. We've made the process simple: just copy our verified **roblox rivals script pastebin** links and execute them using your favorite Roblox executor. For those who prefer a hassle-free setup, we offer **blue lock rivals script no key** versions that work instantly without annoying verification steps.
-
-  If you're searching for **rivals script roblox** features like auto-goal, infinite stamina, or speed hacks, you've come to the right place. Our **blue lock rivals scripts** are updated daily to bypass the latest anti-cheat measures. We also cover **how to use scripts in blue lock rivals** and **how to use script in blue lock rivals** for both PC and mobile users. Whether you need a **blue lock rival script** for better ball control or a **roblox rivals cheats download** for combat advantages, our library has it all.
-
-  Explore our extensive list of **rivals roblox script** entries below. From **roblox rivals aimbot** to **roblox rivals cheats download**, we ensure that every **rival script** is tested and functional. Don't waste time searching for outdated links; get the most effective **blue lock rivals script** right here and start winning today!
-`;
-
-        const RIVALS_SCRIPTS = [
-  {
-    id: "1",
-    title: "Rivals Aimbot Script No GUI",
-    description: "The most powerful rivals aimbot script no gui for Roblox. Features silent aim, wallbang, and FOV circle.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsScript/Main/main/Aimbot.lua'))()",
-    tags: ["Aimbot", "No GUI", "Silent Aim"],
-    isNew: true
-  },
-  {
-    id: "2",
-    title: "Blue Lock Rivals Script No Key",
-    description: "Get the best blue lock rivals script no key. Includes auto-goal, speed boost, and infinite stamina.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BlueLockRivals/Script/main/NoKey.lua'))()",
-    tags: ["Blue Lock", "Auto-Goal", "No Key"]
-  },
-  {
-    id: "3",
-    title: "Roblox Rivals Script Pastebin 2026",
-    description: "Latest roblox rivals script pastebin with ESP, Aimbot, and Fly features. Updated daily.",
-    code: "loadstring(game:HttpGet('https://pastebin.com/raw/RivalsScript2026'))()",
-    tags: ["Pastebin", "ESP", "Fly"]
-  },
-  {
-    id: "4",
-    title: "Rivals Roblox Script - All-in-One",
-    description: "Comprehensive rivals roblox script featuring kill all, auto-farm, and teleport to lobby.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsRoblox/AIO/main/Script.lua'))()",
-    tags: ["Kill All", "Auto-Farm", "Teleport"]
-  },
-  {
-    id: "5",
-    title: "Blue Lock Rivals Scripts - Pro Hub",
-    description: "Access multiple blue lock rivals scripts in one hub. Easy to use with any executor.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/ProHub/BlueLock/main/Loader.lua'))()",
-    tags: ["Hub", "Blue Lock", "Multi-Script"]
-  },
-  {
-    id: "6",
-    title: "Roblox Rivals Aimbot & ESP",
-    description: "High-performance roblox rivals aimbot with customizable ESP boxes and tracers.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsCheats/AimbotESP/main/Main.lua'))()",
-    tags: ["Aimbot", "ESP", "Tracers"]
-  },
-  {
-    id: "7",
-    title: "Rival Script - Speed & Jump",
-    description: "Simple rival script for speed and jump power modification. Undetected and lightweight.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalScript/SpeedJump/main/Script.lua'))()",
-    tags: ["Speed", "Jump", "Undetected"]
-  },
-  {
-    id: "8",
-    title: "Blue Lock Rivals Script - Auto Farm",
-    description: "Efficient blue lock rivals script for auto-farming coins and experience points.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/AutoFarm/main/Script.lua'))()",
-    tags: ["Blue Lock", "Auto-Farm", "Coins"]
-  },
-  {
-    id: "9",
-    title: "Roblox Rivals Cheats Download",
-    description: "Direct access to roblox rivals cheats download for the latest game version. No viruses.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsCheats/Download/main/Loader.lua'))()",
-    tags: ["Cheats", "Download", "Latest"]
-  },
-  {
-    id: "10",
-    title: "Rivals Script Roblox - God Mode",
-    description: "Powerful rivals script roblox with god mode and infinite ammo features.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsGod/Main/main/Script.lua'))()",
-    tags: ["God Mode", "Infinite Ammo", "Roblox"]
-  },
-  {
-    id: "11",
-    title: "Blue Lock Rival Script - Infinite Stamina",
-    description: "Never run out of energy with this blue lock rival script. Perfect for competitive play.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Stamina/main/Script.lua'))()",
-    tags: ["Blue Lock", "Stamina", "Infinite"]
-  },
-  {
-    id: "12",
-    title: "Rivals Scripts - Mobile Support",
-    description: "A collection of rivals scripts optimized for mobile executors like Fluxus and Delta.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsMobile/Scripts/main/Main.lua'))()",
-    tags: ["Mobile", "Fluxus", "Delta"]
-  },
-  {
-    id: "13",
-    title: "Roblox Rivals Script - No Recoil",
-    description: "Remove weapon recoil instantly with this roblox rivals script. Laser accuracy guaranteed.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsNoRecoil/Main/main/Script.lua'))()",
-    tags: ["No Recoil", "Accuracy", "Roblox"]
-  },
-  {
-    id: "14",
-    title: "Blue Lock Rivals Script - Teleport",
-    description: "Teleport to the ball or the goal with this blue lock rivals script. Dominate the field.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Teleport/main/Script.lua'))()",
-    tags: ["Blue Lock", "Teleport", "Goal"]
-  },
-  {
-    id: "15",
-    title: "Rivals Aimbot Script - Silent Aim",
-    description: "The best rivals aimbot script with silent aim. Hit every shot without looking at the target.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsSilent/Main/main/Script.lua'))()",
-    tags: ["Silent Aim", "Aimbot", "OP"]
-  },
-  {
-    id: "16",
-    title: "Roblox Rivals Script - ESP Tracers",
-    description: "See through walls with roblox rivals script ESP tracers. Know where your enemies are.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsESP/Tracers/main/Script.lua'))()",
-    tags: ["ESP", "Tracers", "Wallhack"]
-  },
-  {
-    id: "17",
-    title: "Blue Lock Rivals Script - Speed Boost",
-    description: "Outrun everyone with this blue lock rivals script speed boost. Adjustable speed settings.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Speed/main/Script.lua'))()",
-    tags: ["Blue Lock", "Speed", "Boost"]
-  },
-  {
-    id: "18",
-    title: "Rivals Script - Auto Parry",
-    description: "Never miss a parry with this rivals script auto parry feature. Perfect for 1v1s.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsParry/Auto/main/Script.lua'))()",
-    tags: ["Auto Parry", "1v1", "Combat"]
-  },
-  {
-    id: "19",
-    title: "Roblox Rivals Script - Fly Hack",
-    description: "Fly around the map with roblox rivals script fly hack. Reach high spots easily.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsFly/Main/main/Script.lua'))()",
-    tags: ["Fly", "Hack", "Roblox"]
-  },
-  {
-    id: "20",
-    title: "Blue Lock Rivals Script - Auto Goal",
-    description: "Score every time with blue lock rivals script auto goal. The ultimate striker cheat.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/AutoGoal/main/Script.lua'))()",
-    tags: ["Blue Lock", "Auto Goal", "OP"]
-  },
-  {
-    id: "21",
-    title: "Rivals Script - Infinite Health",
-    description: "Become invincible with this rivals script infinite health. Tank all damage.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsHealth/Infinite/main/Script.lua'))()",
-    tags: ["Health", "Infinite", "God"]
-  },
-  {
-    id: "22",
-    title: "Roblox Rivals Script - Rapid Fire",
-    description: "Shoot faster than ever with roblox rivals script rapid fire. Destroy enemies in seconds.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsFire/Rapid/main/Script.lua'))()",
-    tags: ["Rapid Fire", "Combat", "Roblox"]
-  },
-  {
-    id: "23",
-    title: "Blue Lock Rivals Script - No Key Hub",
-    description: "A hub of blue lock rivals scripts that require no key. Instant access to all features.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/NoKeyHub/main/Main.lua'))()",
-    tags: ["Blue Lock", "No Key", "Hub"]
-  },
-  {
-    id: "24",
-    title: "Rivals Script - Wallbang",
-    description: "Shoot through walls with rivals script wallbang. No one can hide from you.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsWall/Bang/main/Script.lua'))()",
-    tags: ["Wallbang", "Aimbot", "Combat"]
-  },
-  {
-    id: "25",
-    title: "Roblox Rivals Script - Anti-Kick",
-    description: "Stay in the game with roblox rivals script anti-kick. Bypass common anti-cheats.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsAnti/Kick/main/Script.lua'))()",
-    tags: ["Anti-Kick", "Bypass", "Roblox"]
-  },
-  {
-    id: "26",
-    title: "Blue Lock Rivals Script - Max Stats",
-    description: "Instantly max out your stats with blue lock rivals script max stats. Be the best player.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/MaxStats/main/Script.lua'))()",
-    tags: ["Blue Lock", "Stats", "Max"]
-  },
-  {
-    id: "27",
-    title: "Rivals Script - Kill Aura",
-    description: "Kill everyone around you automatically with rivals script kill aura. Dominate the lobby.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsAura/Kill/main/Script.lua'))()",
-    tags: ["Kill Aura", "OP", "Combat"]
-  },
-  {
-    id: "28",
-    title: "Roblox Rivals Script - Infinite Money",
-    description: "Get unlimited coins with roblox rivals script infinite money. Buy all items.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsMoney/Infinite/main/Script.lua'))()",
-    tags: ["Money", "Infinite", "Roblox"]
-  },
-  {
-    id: "29",
-    title: "Blue Lock Rivals Script - Hitbox Expander",
-    description: "Make it easier to hit the ball with blue lock rivals script hitbox expander.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Hitbox/main/Script.lua'))()",
-    tags: ["Blue Lock", "Hitbox", "Expander"]
-  },
-  {
-    id: "30",
-    title: "Rivals Script - No Fog",
-    description: "Clear your vision with rivals script no fog. See the entire map clearly.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsFog/No/main/Script.lua'))()",
-    tags: ["No Fog", "Visuals", "Lightweight"]
-  },
-  {
-    id: "31",
-    title: "Roblox Rivals Script - Full Bright",
-    description: "Light up dark areas with roblox rivals script full bright. Never miss an enemy.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsBright/Full/main/Script.lua'))()",
-    tags: ["Full Bright", "Visuals", "Roblox"]
-  },
-  {
-    id: "32",
-    title: "Blue Lock Rivals Script - Auto Win",
-    description: "Win every match automatically with blue lock rivals script auto win. Rank up fast.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/AutoWin/main/Script.lua'))()",
-    tags: ["Blue Lock", "Auto Win", "Rank"]
-  },
-  {
-    id: "33",
-    title: "Rivals Script - Spin Bot",
-    description: "Troll other players with rivals script spin bot. Hard to hit and funny to watch.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsSpin/Bot/main/Script.lua'))()",
-    tags: ["Spin Bot", "Troll", "Combat"]
-  },
-  {
-    id: "34",
-    title: "Roblox Rivals Script - Chat Spammer",
-    description: "Spam the chat with roblox rivals script chat spammer. Customizable messages.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsChat/Spam/main/Script.lua'))()",
-    tags: ["Chat", "Spam", "Roblox"]
-  },
-  {
-    id: "35",
-    title: "Blue Lock Rivals Script - Ball Magnet",
-    description: "The ball always comes to you with blue lock rivals script ball magnet. Unstoppable.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Magnet/main/Script.lua'))()",
-    tags: ["Blue Lock", "Magnet", "Ball"]
-  },
-  {
-    id: "36",
-    title: "Rivals Script - Instant Kill",
-    description: "One shot any enemy with rivals script instant kill. The most powerful combat cheat.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsKill/Instant/main/Script.lua'))()",
-    tags: ["Instant Kill", "Combat", "OP"]
-  },
-  {
-    id: "37",
-    title: "Roblox Rivals Script - Teleport to Players",
-    description: "Instantly teleport behind enemies with roblox rivals script teleport to players.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsTP/Players/main/Script.lua'))()",
-    tags: ["Teleport", "Players", "Roblox"]
-  },
-  {
-    id: "38",
-    title: "Blue Lock Rivals Script - Skill Unlocker",
-    description: "Unlock all skills instantly with blue lock rivals script skill unlocker.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Skills/main/Script.lua'))()",
-    tags: ["Blue Lock", "Skills", "Unlock"]
-  },
-  {
-    id: "39",
-    title: "Rivals Script - No Clip",
-    description: "Walk through walls with rivals script no clip. Explore the map freely.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsClip/No/main/Script.lua'))()",
-    tags: ["No Clip", "Exploration", "Hack"]
-  },
-  {
-    id: "40",
-    title: "Roblox Rivals Script - Auto Reload",
-    description: "Never manually reload again with roblox rivals script auto reload. Stay in the fight.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsReload/Auto/main/Script.lua'))()",
-    tags: ["Auto Reload", "Combat", "Roblox"]
-  },
-  {
-    id: "41",
-    title: "Blue Lock Rivals Script - Infinite Jumps",
-    description: "Jump as many times as you want with blue lock rivals script infinite jumps.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Jumps/main/Script.lua'))()",
-    tags: ["Blue Lock", "Jumps", "Infinite"]
-  },
-  {
-    id: "42",
-    title: "Rivals Script - FOV Changer",
-    description: "Change your field of view with rivals script FOV changer. See more of the map.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsFOV/Change/main/Script.lua'))()",
-    tags: ["FOV", "Visuals", "Custom"]
-  },
-  {
-    id: "43",
-    title: "Roblox Rivals Script - Rainbow Gun",
-    description: "Make your gun change colors with roblox rivals script rainbow gun. Purely visual.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsGun/Rainbow/main/Script.lua'))()",
-    tags: ["Rainbow", "Gun", "Visuals"]
-  },
-  {
-    id: "44",
-    title: "Blue Lock Rivals Script - Auto Block",
-    description: "Automatically block incoming shots with blue lock rivals script auto block.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Block/main/Script.lua'))()",
-    tags: ["Blue Lock", "Block", "Defense"]
-  },
-  {
-    id: "45",
-    title: "Rivals Script - Server Hopper",
-    description: "Find new matches quickly with rivals script server hopper. Avoid bad lobbies.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsHop/Server/main/Script.lua'))()",
-    tags: ["Server Hop", "Utility", "Fast"]
-  },
-  {
-    id: "46",
-    title: "Roblox Rivals Script - Anti-AFK",
-    description: "Never get kicked for being idle with roblox rivals script anti-AFK. Farm safely.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsAFK/Anti/main/Script.lua'))()",
-    tags: ["Anti-AFK", "Farm", "Roblox"]
-  },
-  {
-    id: "47",
-    title: "Blue Lock Rivals Script - Ghost Mode",
-    description: "Become invisible to other players with blue lock rivals script ghost mode.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Ghost/main/Script.lua'))()",
-    tags: ["Blue Lock", "Ghost", "Invisible"]
-  },
-  {
-    id: "48",
-    title: "Rivals Script - Headshot Only",
-    description: "Force every shot to be a headshot with rivals script headshot only. Maximum damage.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsHead/Only/main/Script.lua'))()",
-    tags: ["Headshot", "Aimbot", "Combat"]
-  },
-  {
-    id: "49",
-    title: "Roblox Rivals Script - Speed Hack Hub",
-    description: "A hub of various speed hacks for roblox rivals. Choose your preferred speed.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsSpeed/Hub/main/Main.lua'))()",
-    tags: ["Speed", "Hack", "Hub"]
-  },
-  {
-    id: "50",
-    title: "Blue Lock Rivals Script - Ultimate Hub",
-    description: "The most complete blue lock rivals script hub with over 50 features. Updated 2026.",
-    code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Ultimate/main/Loader.lua'))()",
-    tags: ["Blue Lock", "Ultimate", "Hub"]
-  }
-];
-
-        // --- COMPONENTS ---
-
-        const Icon = ({ name, className }) => {
-            const [icon, setIcon] = useState(null);
-            useEffect(() => {
-                if (window.lucide) {
-                    const iconData = window.lucide.icons[name];
-                    if (iconData) setIcon(iconData);
-                }
-            }, [name]);
-
-            if (!icon) return <div className={className} />;
-
-            return (
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className={className}
-                    dangerouslySetInnerHTML={{ __html: icon.map(i => `<${i[0]} ${Object.entries(i[1]).map(([k,v]) => `${k}="${v}"`).join(' ')} />`).join('') }}
-                />
-            );
-        };
-
-        const Header = () => (
-            <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-blue-500/20">
-                <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.5)]">
-                            <Icon name="Terminal" className="w-5 h-5 text-white" />
-                        </div>
-                        <span className="text-xl font-bold tracking-tighter text-white">RIVALS<span className="text-blue-500">SCRIPT</span></span>
-                    </div>
-                    <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-400">
-                        <a href="#scripts" className="hover:text-blue-400 transition-colors">Scripts</a>
-                        <a href="#how-to-use" className="hover:text-blue-400 transition-colors">How to Use</a>
-                        <a href="#faq" className="hover:text-blue-400 transition-colors">FAQ</a>
-                    </nav>
-                    <div className="w-10 md:hidden" />
+<body x-data="app()" x-init="initLucide()">
+    
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-blue-500/20">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(37,99,235,0.5)]">
+                    <i data-lucide="terminal" class="w-5 h-5 text-white"></i>
                 </div>
-            </header>
-        );
+                <span class="text-xl font-bold tracking-tighter text-white">RIVALS<span class="text-blue-500">SCRIPT</span></span>
+            </div>
+            <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-400">
+                <a href="#scripts" class="hover:text-blue-400 transition-colors">Scripts</a>
+                <a href="#how-to-use" class="hover:text-blue-400 transition-colors">How to Use</a>
+                <a href="#faq" class="hover:text-blue-400 transition-colors">FAQ</a>
+            </nav>
+            <div class="w-10 md:hidden"></div>
+        </div>
+    </header>
 
-        const ScriptCard = ({ script }) => {
-            const [copied, setCopied] = useState(false);
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 px-4 overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-blue-600/10 blur-[120px] rounded-full -z-10"></div>
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold mb-6">
+                <i data-lucide="flame" class="w-3 h-3"></i>
+                <span>UPDATED FOR 2026</span>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black text-white tracking-tighter mb-6 uppercase italic">
+                RIVALS <span class="text-blue-600">SCRIPT</span>
+            </h1>
+            <div class="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
+                The #1 source for the most powerful **Roblox Rivals scripts**, **Blue Lock Rivals cheats**, and undetected aimbots.
+            </div>
+            
+            <!-- SEO Text Section -->
+            <div class="bg-zinc-900/30 border border-zinc-800 rounded-3xl p-8 text-left text-sm md:text-base leading-relaxed text-zinc-400 mb-12">
+                <div class="max-w-none">
+                    <template x-for="(para, i) in seoParagraphs" :key="i">
+                        <p class="mb-4 last:mb-0" x-html="formatText(para)"></p>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            const handleCopy = () => {
-                navigator.clipboard.writeText(script.code);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
-            };
+    <!-- Stats Section -->
+    <section class="max-w-7xl mx-auto px-4 mb-20">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <template x-for="stat in stats" :key="stat.label">
+                <div class="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 text-center">
+                    <i :data-lucide="stat.icon" class="w-6 h-6 text-blue-500 mx-auto mb-3"></i>
+                    <div class="text-2xl font-black text-white mb-1" x-text="stat.value"></div>
+                    <div class="text-xs font-bold text-zinc-500 uppercase tracking-widest" x-text="stat.label"></div>
+                </div>
+            </template>
+        </div>
+    </section>
 
-            const handleDownload = () => {
-                const blob = new Blob([script.code], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `${script.title.toLowerCase().replace(/\s+/g, '_')}.lua`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            };
-
-            return (
-                <motion.div 
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="group relative bg-zinc-900/50 border border-zinc-800 rounded-2xl p-5 hover:border-blue-500/50 transition-all hover:bg-zinc-900/80"
+    <!-- Scripts Section -->
+    <section id="scripts" class="max-w-7xl mx-auto px-4 mb-32">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+            <div>
+                <h2 class="text-3xl font-black text-white mb-2 uppercase italic">Script Library</h2>
+                <p class="text-zinc-500 font-medium">Browse our collection of verified rivals scripts.</p>
+            </div>
+            <div class="relative w-full md:w-96">
+                <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500"></i>
+                <input 
+                    type="text" 
+                    placeholder="Search scripts (e.g. Aimbot, Blue Lock)..."
+                    x-model="search"
+                    class="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-blue-500 transition-all"
                 >
-                    {script.isNew && (
-                        <div className="absolute -top-2 -right-2 bg-blue-600 text-[10px] font-bold px-2 py-1 rounded-full text-white shadow-lg animate-pulse-custom">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <template x-for="script in filteredScripts" :key="script.id">
+                <div class="group relative bg-zinc-900/50 border border-zinc-800 rounded-2xl p-5 hover:border-blue-500/50 transition-all hover:bg-zinc-900/80">
+                    <template x-if="script.isNew">
+                        <div class="absolute -top-2 -right-2 bg-blue-600 text-[10px] font-bold px-2 py-1 rounded-full text-white shadow-lg animate-pulse-custom">
                             NEW
                         </div>
-                    )}
-                    <div className="flex justify-between items-start mb-3">
-                        <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors leading-tight">
-                            {script.title}
-                        </h3>
-                        <Icon name="Star" className="w-4 h-4 text-zinc-600 group-hover:text-yellow-500 transition-colors" />
+                    </template>
+                    <div class="flex justify-between items-start mb-3">
+                        <h3 class="text-lg font-bold text-white group-hover:text-blue-400 transition-colors leading-tight" x-text="script.title"></h3>
+                        <i data-lucide="star" class="w-4 h-4 text-zinc-600 group-hover:text-yellow-500 transition-colors"></i>
                     </div>
-                    <p className="text-sm text-zinc-400 mb-4 line-clamp-2 min-h-[40px]">
-                        {script.description}
-                    </p>
+                    <p class="text-sm text-zinc-400 mb-4 line-clamp-2 min-h-[40px]" x-text="script.description"></p>
                     
-                    <div className="mb-4">
-                        <div className="text-[10px] font-bold text-zinc-500 uppercase mb-1 flex items-center gap-1">
-                            <Icon name="Terminal" className="w-3 h-3" />
+                    <div class="mb-4">
+                        <div class="text-[10px] font-bold text-zinc-500 uppercase mb-1 flex items-center gap-1">
+                            <i data-lucide="terminal" class="w-3 h-3"></i>
                             Source Code
                         </div>
-                        <div className="bg-black/50 border border-zinc-800 rounded-lg p-3 font-mono text-[11px] text-blue-400/80 overflow-x-auto whitespace-nowrap scrollbar-hide">
-                            {script.code}
-                        </div>
+                        <div class="bg-black/50 border border-zinc-800 rounded-lg p-3 font-mono text-[11px] text-blue-400/80 overflow-x-auto whitespace-nowrap scrollbar-hide" x-text="script.code"></div>
                     </div>
 
-                    <div className="flex flex-wrap gap-2 mb-4">
-                        {script.tags.map(tag => (
-                            <span key={tag} className="text-[10px] uppercase tracking-wider font-bold px-2 py-1 bg-zinc-800 text-zinc-500 rounded-md border border-zinc-700">
-                                {tag}
-                            </span>
-                        ))}
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <template x-for="tag in script.tags" :key="tag">
+                            <span class="text-[10px] uppercase tracking-wider font-bold px-2 py-1 bg-zinc-800 text-zinc-500 rounded-md border border-zinc-700" x-text="tag"></span>
+                        </template>
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-2">
+                    <div class="grid grid-cols-2 gap-2">
                         <button 
-                            onClick={handleCopy}
-                            className={`flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all ${
-                                copied 
-                                    ? 'bg-emerald-600 text-white' 
-                                    : 'bg-zinc-800 text-white hover:bg-blue-600'
-                            }`}
+                            @click="copyScript(script.code, $el)"
+                            class="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm transition-all bg-zinc-800 text-white hover:bg-blue-600"
                         >
-                            {copied ? <Icon name="Check" className="w-4 h-4" /> : <Icon name="Copy" className="w-4 h-4" />}
-                            {copied ? 'Copied!' : 'Copy'}
+                            <i data-lucide="copy" class="w-4 h-4"></i>
+                            <span>Copy</span>
                         </button>
                         <button 
-                            onClick={handleDownload}
-                            className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm bg-zinc-800 text-white hover:bg-blue-600 transition-all"
+                            @click="downloadScript(script.code, script.title)"
+                            class="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-sm bg-zinc-800 text-white hover:bg-blue-600 transition-all"
                         >
-                            <Icon name="Download" className="w-4 h-4" />
+                            <i data-lucide="download" class="w-4 h-4"></i>
                             .lua
                         </button>
                     </div>
-                </motion.div>
-            );
-        };
+                </div>
+            </template>
+        </div>
+        
+        <div x-show="filteredScripts.length === 0" class="text-center py-20" x-cloak>
+            <div class="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center mx-auto mb-4 border border-zinc-800">
+                <i data-lucide="info" class="w-8 h-8 text-zinc-600"></i>
+            </div>
+            <h3 class="text-xl font-bold text-white mb-2">No scripts found</h3>
+            <p class="text-zinc-500">Try searching for something else like "Aimbot" or "No Key".</p>
+        </div>
+    </section>
 
-        const FAQItem = ({ question, answer }) => {
-            const [isOpen, setIsOpen] = useState(false);
-            return (
-                <div className="border-b border-zinc-800">
+    <!-- How to Use Section -->
+    <section id="how-to-use" class="bg-zinc-900/30 border-y border-zinc-800 py-32 px-4 mb-32">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-white mb-4 uppercase italic">How to Use Rivals Scripts</h2>
+                <p class="text-zinc-400">Follow these simple steps to execute scripts in Roblox Rivals.</p>
+            </div>
+            <div class="grid gap-8">
+                <template x-for="item in howToUse" :key="item.step">
+                    <div class="flex gap-6 items-start p-6 rounded-3xl bg-black/40 border border-zinc-800 hover:border-blue-500/30 transition-all group">
+                        <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 font-black text-xl group-hover:bg-blue-600 group-hover:text-white transition-all" x-text="item.step"></div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2" x-text="item.title"></h3>
+                            <p class="text-zinc-400 leading-relaxed" x-text="item.desc"></p>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="max-w-4xl mx-auto px-4 mb-32">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-black text-white mb-4 uppercase italic">Frequently Asked Questions</h2>
+            <p class="text-zinc-400">Everything you need to know about our Rivals scripts.</p>
+        </div>
+        <div class="space-y-2">
+            <template x-for="faq in faqs" :key="faq.question">
+                <div class="border-b border-zinc-800" x-data="{ open: false }">
                     <button 
-                        onClick={() => setIsOpen(!isOpen)}
-                        className="w-full py-6 flex items-center justify-between text-left hover:text-blue-400 transition-colors"
+                        @click="open = !open"
+                        class="w-full py-6 flex items-center justify-between text-left hover:text-blue-400 transition-colors"
                     >
-                        <span className="text-lg font-semibold text-white">{question}</span>
-                        <Icon name="ChevronDown" className={`w-5 h-5 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+                        <span class="text-lg font-semibold text-white" x-text="faq.question"></span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 transition-transform" :class="open ? 'rotate-180' : ''"></i>
                     </button>
-                    <AnimatePresence>
-                        {isOpen && (
-                            <motion.div 
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                className="overflow-hidden"
-                            >
-                                <p className="pb-6 text-zinc-400 leading-relaxed">
-                                    {answer}
-                                </p>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                    <div x-show="open" x-collapse x-cloak>
+                        <p class="pb-6 text-zinc-400 leading-relaxed" x-text="faq.answer"></p>
+                    </div>
                 </div>
-            );
-        };
+            </template>
+        </div>
+    </section>
 
-        function App() {
-            const [search, setSearch] = useState('');
-            
-            const filteredScripts = useMemo(() => {
-                return RIVALS_SCRIPTS.filter(s => 
-                    s.title.toLowerCase().includes(search.toLowerCase()) ||
-                    s.tags.some(t => t.toLowerCase().includes(search.toLowerCase()))
-                );
-            }, [search]);
-
-            return (
-                <div className="min-h-screen bg-black text-zinc-300 font-sans selection:bg-blue-500/30 selection:text-blue-200">
-                    <Header />
-
-                    {/* Hero Section */}
-                    <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-blue-600/10 blur-[120px] rounded-full -z-10" />
-                        <div className="max-w-4xl mx-auto text-center">
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold mb-6"
-                            >
-                                <Icon name="Flame" className="w-3 h-3" />
-                                <span>UPDATED FOR 2026</span>
-                            </motion.div>
-                            <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter mb-6 uppercase italic">
-                                RIVALS <span className="text-blue-600">SCRIPT</span>
-                            </h1>
-                            <div className="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
-                                The #1 source for the most powerful **Roblox Rivals scripts**, **Blue Lock Rivals cheats**, and undetected aimbots.
-                            </div>
-                            
-                            {/* SEO Text Section */}
-                            <div className="bg-zinc-900/30 border border-zinc-800 rounded-3xl p-8 text-left text-sm md:text-base leading-relaxed text-zinc-400 mb-12">
-                                <div className="max-w-none">
-                                    {SEO_TEXT.split('\n').map((para, i) => (
-                                        <p key={i} className="mb-4 last:mb-0">
-                                            {para.split('**').map((part, j) => (
-                                                j % 2 === 1 ? <strong key={j} className="text-blue-400 font-bold">{part}</strong> : part
-                                            ))}
-                                        </p>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* Stats Section */}
-                    <section className="max-w-7xl mx-auto px-4 mb-20">
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            {[
-                                { label: 'Total Scripts', value: '50+', icon: 'Terminal' },
-                                { label: 'Daily Users', value: '12K+', icon: 'Zap' },
-                                { label: 'Status', value: 'Undetected', icon: 'Shield' },
-                                { label: 'Platforms', value: 'PC & Mobile', icon: 'Smartphone' },
-                            ].map((stat, i) => (
-                                <div key={i} className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 text-center">
-                                    <Icon name={stat.icon} className="w-6 h-6 text-blue-500 mx-auto mb-3" />
-                                    <div className="text-2xl font-black text-white mb-1">{stat.value}</div>
-                                    <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest">{stat.label}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </section>
-
-                    {/* Scripts Section */}
-                    <section id="scripts" className="max-w-7xl mx-auto px-4 mb-32">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-                            <div>
-                                <h2 className="text-3xl font-black text-white mb-2 uppercase italic">Script Library</h2>
-                                <p className="text-zinc-500 font-medium">Browse our collection of verified rivals scripts.</p>
-                            </div>
-                            <div className="relative w-full md:w-96">
-                                <Icon name="Search" className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
-                                <input 
-                                    type="text" 
-                                    placeholder="Search scripts (e.g. Aimbot, Blue Lock)..."
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-blue-500 transition-all"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                            <AnimatePresence>
-                                {filteredScripts.map(script => (
-                                    <ScriptCard key={script.id} script={script} />
-                                ))}
-                            </AnimatePresence>
-                        </div>
-                        
-                        {filteredScripts.length === 0 && (
-                            <div className="text-center py-20">
-                                <div className="w-16 h-16 bg-zinc-900 rounded-full flex items-center justify-center mx-auto mb-4 border border-zinc-800">
-                                    <Icon name="Info" className="w-8 h-8 text-zinc-600" />
-                                </div>
-                                <h3 className="text-xl font-bold text-white mb-2">No scripts found</h3>
-                                <p className="text-zinc-500">Try searching for something else like "Aimbot" or "No Key".</p>
-                            </div>
-                        )}
-                    </section>
-
-                    {/* How to Use Section */}
-                    <section id="how-to-use" className="bg-zinc-900/30 border-y border-zinc-800 py-32 px-4 mb-32">
-                        <div className="max-w-4xl mx-auto">
-                            <div className="text-center mb-16">
-                                <h2 className="text-4xl font-black text-white mb-4 uppercase italic">How to Use Rivals Scripts</h2>
-                                <p className="text-zinc-400">Follow these simple steps to execute scripts in Roblox Rivals.</p>
-                            </div>
-                            <div className="grid gap-8">
-                                {[
-                                    { 
-                                        step: '01', 
-                                        title: 'Get an Executor', 
-                                        desc: 'Download a reliable Roblox executor like Synapse Z, Fluxus, or Delta. Make sure it is updated to the latest version.',
-                                        icon: 'Cpu' 
-                                    },
-                                    { 
-                                        step: '02', 
-                                        title: 'Copy the Script', 
-                                        desc: 'Choose a script from our library above and click the "Copy Script" button to save the loadstring to your clipboard.',
-                                        icon: 'Copy' 
-                                    },
-                                    { 
-                                        step: '03', 
-                                        title: 'Launch Rivals', 
-                                        desc: 'Open Roblox and join a match in Rivals or Blue Lock Rivals. Ensure your executor is attached/injected.',
-                                        icon: 'Gamepad2' 
-                                    },
-                                    { 
-                                        step: '04', 
-                                        title: 'Execute & Enjoy', 
-                                        desc: 'Paste the script into your executor\'s editor and click "Execute". The script menu should appear in-game.',
-                                        icon: 'Zap' 
-                                    },
-                                ].map((item, i) => (
-                                    <div key={i} className="flex gap-6 items-start p-6 rounded-3xl bg-black/40 border border-zinc-800 hover:border-blue-500/30 transition-all group">
-                                        <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-blue-600/10 border border-blue-500/20 flex items-center justify-center text-blue-500 font-black text-xl group-hover:bg-blue-600 group-hover:text-white transition-all">
-                                            {item.step}
-                                        </div>
-                                        <div>
-                                            <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                                            <p className="text-zinc-400 leading-relaxed">{item.desc}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* FAQ Section */}
-                    <section id="faq" className="max-w-4xl mx-auto px-4 mb-32">
-                        <div className="text-center mb-16">
-                            <h2 className="text-4xl font-black text-white mb-4 uppercase italic">Frequently Asked Questions</h2>
-                            <p className="text-zinc-400">Everything you need to know about our Rivals scripts.</p>
-                        </div>
-                        <div className="space-y-2">
-                            <FAQItem 
-                                question="Are these rivals scripts safe to use?" 
-                                answer="Yes, all scripts in our library are tested and verified. However, we always recommend using an alt account when cheating in Roblox to avoid any risks to your main account." 
-                            />
-                            <FAQItem 
-                                question="Do I need a key for the Blue Lock Rivals script?" 
-                                answer="Most of our scripts are 'No Key', meaning you can use them instantly. Some advanced hubs might require a key from the developer's Discord, but we prioritize keyless options." 
-                            />
-                            <FAQItem 
-                                question="How to get blue lock rivals script for mobile?" 
-                                answer="Simply browse our library and look for the 'Mobile Support' tag. These scripts are optimized for mobile executors like Fluxus and Delta." 
-                            />
-                            <FAQItem 
-                                question="Why is my executor not working with the script?" 
-                                answer="Make sure your executor is updated. Roblox updates frequently, which can break executors. Also, ensure you have the correct game version open." 
-                            />
-                            <FAQItem 
-                                question="Where can I find more roblox rivals script pastebin links?" 
-                                answer="We aggregate the best pastebin links right here. Our library is updated daily, so you don't need to look anywhere else for the latest rivals scripts." 
-                            />
-                        </div>
-                    </section>
-
-                    {/* Footer */}
-                    <footer className="bg-zinc-900/50 border-t border-zinc-800 py-12 px-4">
-                        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-                            <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                                    <Icon name="Terminal" className="w-5 h-5 text-white" />
-                                </div>
-                                <span className="text-xl font-bold tracking-tighter text-white">RIVALS<span className="text-blue-500">SCRIPT</span></span>
-                            </div>
-                            <div className="text-zinc-500 text-sm font-medium">
-                                © 2026 RIVALS SCRIPT. All rights reserved. Not affiliated with Roblox.
-                            </div>
-                        </div>
-                    </footer>
+    <!-- Footer -->
+    <footer class="bg-zinc-900/50 border-t border-zinc-800 py-12 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <i data-lucide="terminal" class="w-5 h-5 text-white"></i>
                 </div>
-            );
+                <span class="text-xl font-bold tracking-tighter text-white">RIVALS<span class="text-blue-500">SCRIPT</span></span>
+            </div>
+            <div class="text-zinc-500 text-sm font-medium">
+                © 2026 RIVALS SCRIPT. All rights reserved. Not affiliated with Roblox.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function app() {
+            return {
+                search: '',
+                seoParagraphs: [
+                    "Welcome to the ultimate destination for the most powerful **RIVALS script** and **Blue Lock Rivals script** for Roblox. If you're looking to dominate the competition, our collection of **rivals scripts** offers everything from high-precision **roblox rivals aimbot** to advanced ESP features. Whether you're playing the fast-paced FPS mode or the intense soccer matches in Blue Lock, having a reliable **roblox rivals script** is essential for staying ahead of the game.",
+                    "Our platform provides the latest **rivals aimbot script no gui** options, ensuring a lightweight and undetected experience. Many players often wonder **how to use blue lock rivals script** or **how to get blue lock rivals script** safely. We've made the process simple: just copy our verified **roblox rivals script pastebin** links and execute them using your favorite Roblox executor. For those who prefer a hassle-free setup, we offer **blue lock rivals script no key** versions that work instantly without annoying verification steps.",
+                    "If you're searching for **rivals script roblox** features like auto-goal, infinite stamina, or speed hacks, you've come to the right place. Our **blue lock rivals scripts** are updated daily to bypass the latest anti-cheat measures. We also cover **how to use scripts in blue lock rivals** and **how to use script in blue lock rivals** for both PC and mobile users. Whether you need a **blue lock rival script** for better ball control or a **roblox rivals cheats download** for combat advantages, our library has it all.",
+                    "Explore our extensive list of **rivals roblox script** entries below. From **roblox rivals aimbot** to **roblox rivals cheats download**, we ensure that every **rival script** is tested and functional. Don't waste time searching for outdated links; get the most effective **blue lock rivals script** right here and start winning today!"
+                ],
+                stats: [
+                    { label: 'Total Scripts', value: '50+', icon: 'terminal' },
+                    { label: 'Daily Users', value: '12K+', icon: 'zap' },
+                    { label: 'Status', value: 'Undetected', icon: 'shield' },
+                    { label: 'Platforms', value: 'PC & Mobile', icon: 'smartphone' },
+                ],
+                scripts: [
+                    { id: "1", title: "Rivals Aimbot Script No GUI", description: "The most powerful rivals aimbot script no gui for Roblox. Features silent aim, wallbang, and FOV circle.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsScript/Main/main/Aimbot.lua'))()", tags: ["Aimbot", "No GUI", "Silent Aim"], isNew: true },
+                    { id: "2", title: "Blue Lock Rivals Script No Key", description: "Get the best blue lock rivals script no key. Includes auto-goal, speed boost, and infinite stamina.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BlueLockRivals/Script/main/NoKey.lua'))()", tags: ["Blue Lock", "Auto-Goal", "No Key"] },
+                    { id: "3", title: "Roblox Rivals Script Pastebin 2026", description: "Latest roblox rivals script pastebin with ESP, Aimbot, and Fly features. Updated daily.", code: "loadstring(game:HttpGet('https://pastebin.com/raw/RivalsScript2026'))()", tags: ["Pastebin", "ESP", "Fly"] },
+                    { id: "4", title: "Rivals Roblox Script - All-in-One", description: "Comprehensive rivals roblox script featuring kill all, auto-farm, and teleport to lobby.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsRoblox/AIO/main/Script.lua'))()", tags: ["Kill All", "Auto-Farm", "Teleport"] },
+                    { id: "5", title: "Blue Lock Rivals Scripts - Pro Hub", description: "Access multiple blue lock rivals scripts in one hub. Easy to use with any executor.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/ProHub/BlueLock/main/Loader.lua'))()", tags: ["Hub", "Blue Lock", "Multi-Script"] },
+                    { id: "6", title: "Roblox Rivals Aimbot & ESP", description: "High-performance roblox rivals aimbot with customizable ESP boxes and tracers.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsCheats/AimbotESP/main/Main.lua'))()", tags: ["Aimbot", "ESP", "Tracers"] },
+                    { id: "7", title: "Rival Script - Speed & Jump", description: "Simple rival script for speed and jump power modification. Undetected and lightweight.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalScript/SpeedJump/main/Script.lua'))()", tags: ["Speed", "Jump", "Undetected"] },
+                    { id: "8", title: "Blue Lock Rivals Script - Auto Farm", description: "Efficient blue lock rivals script for auto-farming coins and experience points.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/AutoFarm/main/Script.lua'))()", tags: ["Blue Lock", "Auto-Farm", "Coins"] },
+                    { id: "9", title: "Roblox Rivals Cheats Download", description: "Direct access to roblox rivals cheats download for the latest game version. No viruses.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsCheats/Download/main/Loader.lua'))()", tags: ["Cheats", "Download", "Latest"] },
+                    { id: "10", title: "Rivals Script Roblox - God Mode", description: "Powerful rivals script roblox with god mode and infinite ammo features.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsGod/Main/main/Script.lua'))()", tags: ["God Mode", "Infinite Ammo", "Roblox"] },
+                    { id: "11", title: "Blue Lock Rival Script - Infinite Stamina", description: "Never run out of energy with this blue lock rival script. Perfect for competitive play.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Stamina/main/Script.lua'))()", tags: ["Blue Lock", "Stamina", "Infinite"] },
+                    { id: "12", title: "Rivals Scripts - Mobile Support", description: "A collection of rivals scripts optimized for mobile executors like Fluxus and Delta.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsMobile/Scripts/main/Main.lua'))()", tags: ["Mobile", "Fluxus", "Delta"] },
+                    { id: "13", title: "Roblox Rivals Script - No Recoil", description: "Remove weapon recoil instantly with this roblox rivals script. Laser accuracy guaranteed.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsNoRecoil/Main/main/Script.lua'))()", tags: ["No Recoil", "Accuracy", "Roblox"] },
+                    { id: "14", title: "Blue Lock Rivals Script - Teleport", description: "Teleport to the ball or the goal with this blue lock rivals script. Dominate the field.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Teleport/main/Script.lua'))()", tags: ["Blue Lock", "Teleport", "Goal"] },
+                    { id: "15", title: "Rivals Aimbot Script - Silent Aim", description: "The best rivals aimbot script with silent aim. Hit every shot without looking at the target.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsSilent/Main/main/Script.lua'))()", tags: ["Silent Aim", "Aimbot", "OP"] },
+                    { id: "16", title: "Roblox Rivals Script - ESP Tracers", description: "See through walls with roblox rivals script ESP tracers. Know where your enemies are.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsESP/Tracers/main/Script.lua'))()", tags: ["ESP", "Tracers", "Wallhack"] },
+                    { id: "17", title: "Blue Lock Rivals Script - Speed Boost", description: "Outrun everyone with this blue lock rivals script speed boost. Adjustable speed settings.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Speed/main/Script.lua'))()", tags: ["Blue Lock", "Speed", "Boost"] },
+                    { id: "18", title: "Rivals Script - Auto Parry", description: "Never miss a parry with this rivals script auto parry feature. Perfect for 1v1s.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsParry/Auto/main/Script.lua'))()", tags: ["Auto Parry", "1v1", "Combat"] },
+                    { id: "19", title: "Roblox Rivals Script - Fly Hack", description: "Fly around the map with roblox rivals script fly hack. Reach high spots easily.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsFly/Main/main/Script.lua'))()", tags: ["Fly", "Hack", "Roblox"] },
+                    { id: "20", title: "Blue Lock Rivals Script - Auto Goal", description: "Score every time with blue lock rivals script auto goal. The ultimate striker cheat.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/AutoGoal/main/Script.lua'))()", tags: ["Blue Lock", "Auto Goal", "OP"] },
+                    { id: "21", title: "Rivals Script - Infinite Health", description: "Become invincible with this rivals script infinite health. Tank all damage.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsHealth/Infinite/main/Script.lua'))()", tags: ["Health", "Infinite", "God"] },
+                    { id: "22", title: "Roblox Rivals Script - Rapid Fire", description: "Shoot faster than ever with roblox rivals script rapid fire. Destroy enemies in seconds.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsFire/Rapid/main/Script.lua'))()", tags: ["Rapid Fire", "Combat", "Roblox"] },
+                    { id: "23", title: "Blue Lock Rivals Script - No Key Hub", description: "A hub of blue lock rivals scripts that require no key. Instant access to all features.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/NoKeyHub/main/Main.lua'))()", tags: ["Blue Lock", "No Key", "Hub"] },
+                    { id: "24", title: "Rivals Script - Wallbang", description: "Shoot through walls with rivals script wallbang. No one can hide from you.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsWall/Bang/main/Script.lua'))()", tags: ["Wallbang", "Aimbot", "Combat"] },
+                    { id: "25", title: "Roblox Rivals Script - Anti-Kick", description: "Stay in the game with roblox rivals script anti-kick. Bypass common anti-cheats.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsAnti/Kick/main/Script.lua'))()", tags: ["Anti-Kick", "Bypass", "Roblox"] },
+                    { id: "26", title: "Blue Lock Rivals Script - Max Stats", description: "Instantly max out your stats with blue lock rivals script max stats. Be the best player.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/MaxStats/main/Script.lua'))()", tags: ["Blue Lock", "Stats", "Max"] },
+                    { id: "27", title: "Rivals Script - Kill Aura", description: "Kill everyone around you automatically with rivals script kill aura. Dominate the lobby.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsAura/Kill/main/Script.lua'))()", tags: ["Kill Aura", "OP", "Combat"] },
+                    { id: "28", title: "Roblox Rivals Script - Infinite Money", description: "Get unlimited coins with roblox rivals script infinite money. Buy all items.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsMoney/Infinite/main/Script.lua'))()", tags: ["Money", "Infinite", "Roblox"] },
+                    { id: "29", title: "Blue Lock Rivals Script - Hitbox Expander", description: "Make it easier to hit the ball with blue lock rivals script hitbox expander.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Hitbox/main/Script.lua'))()", tags: ["Blue Lock", "Hitbox", "Expander"] },
+                    { id: "30", title: "Rivals Script - No Fog", description: "Clear your vision with rivals script no fog. See the entire map clearly.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsFog/No/main/Script.lua'))()", tags: ["No Fog", "Visuals", "Lightweight"] },
+                    { id: "31", title: "Roblox Rivals Script - Full Bright", description: "Light up dark areas with roblox rivals script full bright. Never miss an enemy.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsBright/Full/main/Script.lua'))()", tags: ["Full Bright", "Visuals", "Roblox"] },
+                    { id: "32", title: "Blue Lock Rivals Script - Auto Win", description: "Win every match automatically with blue lock rivals script auto win. Rank up fast.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/AutoWin/main/Script.lua'))()", tags: ["Blue Lock", "Auto Win", "Rank"] },
+                    { id: "33", title: "Rivals Script - Spin Bot", description: "Troll other players with rivals script spin bot. Hard to hit and funny to watch.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsSpin/Bot/main/Script.lua'))()", tags: ["Spin Bot", "Troll", "Combat"] },
+                    { id: "34", title: "Roblox Rivals Script - Chat Spammer", description: "Spam the chat with roblox rivals script chat spammer. Customizable messages.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsChat/Spam/main/Script.lua'))()", tags: ["Chat", "Spam", "Roblox"] },
+                    { id: "35", title: "Blue Lock Rivals Script - Ball Magnet", description: "The ball always comes to you with blue lock rivals script ball magnet. Unstoppable.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Magnet/main/Script.lua'))()", tags: ["Blue Lock", "Magnet", "Ball"] },
+                    { id: "36", title: "Rivals Script - Instant Kill", description: "One shot any enemy with rivals script instant kill. The most powerful combat cheat.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsKill/Instant/main/Script.lua'))()", tags: ["Instant Kill", "Combat", "OP"] },
+                    { id: "37", title: "Roblox Rivals Script - Teleport to Players", description: "Instantly teleport behind enemies with roblox rivals script teleport to players.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsTP/Players/main/Script.lua'))()", tags: ["Teleport", "Players", "Roblox"] },
+                    { id: "38", title: "Blue Lock Rivals Script - Skill Unlocker", description: "Unlock all skills instantly with blue lock rivals script skill unlocker.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Skills/main/Script.lua'))()", tags: ["Blue Lock", "Skills", "Unlock"] },
+                    { id: "39", title: "Rivals Script - No Clip", description: "Walk through walls with rivals script no clip. Explore the map freely.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsClip/No/main/Script.lua'))()", tags: ["No Clip", "Exploration", "Hack"] },
+                    { id: "40", title: "Roblox Rivals Script - Auto Reload", description: "Never manually reload again with roblox rivals script auto reload. Stay in the fight.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsReload/Auto/main/Script.lua'))()", tags: ["Auto Reload", "Combat", "Roblox"] },
+                    { id: "41", title: "Blue Lock Rivals Script - Infinite Jumps", description: "Jump as many times as you want with blue lock rivals script infinite jumps.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Jumps/main/Script.lua'))()", tags: ["Blue Lock", "Jumps", "Infinite"] },
+                    { id: "42", title: "Rivals Script - FOV Changer", description: "Change your field of view with rivals script FOV changer. See more of the map.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsFOV/Change/main/Script.lua'))()", tags: ["FOV", "Visuals", "Custom"] },
+                    { id: "43", title: "Roblox Rivals Script - Rainbow Gun", description: "Make your gun change colors with roblox rivals script rainbow gun. Purely visual.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsGun/Rainbow/main/Script.lua'))()", tags: ["Rainbow", "Gun", "Visuals"] },
+                    { id: "44", title: "Blue Lock Rivals Script - Auto Block", description: "Automatically block incoming shots with blue lock rivals script auto block.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Block/main/Script.lua'))()", tags: ["Blue Lock", "Block", "Defense"] },
+                    { id: "45", title: "Rivals Script - Server Hopper", description: "Find new matches quickly with rivals script server hopper. Avoid bad lobbies.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsHop/Server/main/Script.lua'))()", tags: ["Server Hop", "Utility", "Fast"] },
+                    { id: "46", title: "Roblox Rivals Script - Anti-AFK", description: "Never get kicked for being idle with roblox rivals script anti-AFK. Farm safely.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsAFK/Anti/main/Script.lua'))()", tags: ["Anti-AFK", "Farm", "Roblox"] },
+                    { id: "47", title: "Blue Lock Rivals Script - Ghost Mode", description: "Become invisible to other players with blue lock rivals script ghost mode.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Ghost/main/Script.lua'))()", tags: ["Blue Lock", "Ghost", "Invisible"] },
+                    { id: "48", title: "Rivals Script - Headshot Only", description: "Force every shot to be a headshot with rivals script headshot only. Maximum damage.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsHead/Only/main/Script.lua'))()", tags: ["Headshot", "Aimbot", "Combat"] },
+                    { id: "49", title: "Roblox Rivals Script - Speed Hack Hub", description: "A hub of various speed hacks for roblox rivals. Choose your preferred speed.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/RivalsSpeed/Hub/main/Main.lua'))()", tags: ["Speed", "Hack", "Hub"] },
+                    { id: "50", title: "Blue Lock Rivals Script - Ultimate Hub", description: "The most complete blue lock rivals script hub with over 50 features. Updated 2026.", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/BLR/Ultimate/main/Loader.lua'))()", tags: ["Blue Lock", "Ultimate", "Hub"] }
+                ],
+                howToUse: [
+                    { step: '01', title: 'Get an Executor', desc: 'Download a reliable Roblox executor like Synapse Z, Fluxus, or Delta. Make sure it is updated to the latest version.' },
+                    { step: '02', title: 'Copy the Script', desc: 'Choose a script from our library above and click the "Copy Script" button to save the loadstring to your clipboard.' },
+                    { step: '03', title: 'Launch Rivals', desc: 'Open Roblox and join a match in Rivals or Blue Lock Rivals. Ensure your executor is attached/injected.' },
+                    { step: '04', title: 'Execute & Enjoy', desc: 'Paste the script into your executor\'s editor and click "Execute". The script menu should appear in-game.' },
+                ],
+                faqs: [
+                    { question: "Are these rivals scripts safe to use?", answer: "Yes, all scripts in our library are tested and verified. However, we always recommend using an alt account when cheating in Roblox to avoid any risks to your main account." },
+                    { question: "Do I need a key for the Blue Lock Rivals script?", answer: "Most of our scripts are 'No Key', meaning you can use them instantly. Some advanced hubs might require a key from the developer's Discord, but we prioritize keyless options." },
+                    { question: "How to get blue lock rivals script for mobile?", answer: "Simply browse our library and look for the 'Mobile Support' tag. These scripts are optimized for mobile executors like Fluxus and Delta." },
+                    { question: "Why is my executor not working with the script?", answer: "Make sure your executor is updated. Roblox updates frequently, which can break executors. Also, ensure you have the correct game version open." },
+                    { question: "Where can I find more roblox rivals script pastebin links?", answer: "We aggregate the best pastebin links right here. Our library is updated daily, so you don't need to look anywhere else for the latest rivals scripts." }
+                ],
+                get filteredScripts() {
+                    if (!this.search) return this.scripts;
+                    const s = this.search.toLowerCase();
+                    return this.scripts.filter(script => 
+                        script.title.toLowerCase().includes(s) || 
+                        script.tags.some(t => t.toLowerCase().includes(s))
+                    );
+                },
+                formatText(text) {
+                    return text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-blue-400 font-bold">$1</strong>');
+                },
+                initLucide() {
+                    this.$nextTick(() => {
+                        if (window.lucide) window.lucide.createIcons();
+                    });
+                },
+                copyScript(code, btn) {
+                    navigator.clipboard.writeText(code);
+                    const span = btn.querySelector('span');
+                    const originalText = span.innerText;
+                    span.innerText = 'Copied!';
+                    btn.classList.add('bg-emerald-600');
+                    btn.classList.remove('bg-zinc-800');
+                    setTimeout(() => {
+                        span.innerText = originalText;
+                        btn.classList.remove('bg-emerald-600');
+                        btn.classList.add('bg-zinc-800');
+                    }, 2000);
+                },
+                downloadScript(code, title) {
+                    const blob = new Blob([code], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${title.toLowerCase().replace(/\s+/g, '_')}.lua`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }
+            }
         }
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
     </script>
 </body>
 </html>
